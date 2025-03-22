@@ -1,0 +1,134 @@
+@model IEnumerable<API.Dto.Configuracion.Salida.DatosConfiguracion>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
+    <br />
+    <h2>Gestión de Configuraciones</h2>
+
+    <div class="container-fluid">
+        <br />
+        <div style="width:100%; margin:0 auto;">
+            <button id='btnAbrirDialogAgregarConfiguracion' class="btn btn-primary" style="background-color: #1A2DF3; width:10%">Agregar</button>
+            <br /><br />
+            <table class="display table table-bordered" id="ConfiguracionesTabla" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Clave</th>
+                        <th>Valor</th>
+                        <th>Descripción</th>
+                        <th>Última Modificación</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td id='ClaveParam'>
+                                @Html.DisplayFor(modelItem => item.Clave)
+                            </td>
+                            <td id='ValorParam'>
+                                @Html.DisplayFor(modelItem => item.Valor)
+                            </td>
+                            <td id='DescripcionParam'>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>
+                            <td id='ModificacionParam'>
+                                @Html.DisplayFor(modelItem => item.Ultima_modificacion)
+                            </td>
+                            <td class="text-center">
+                                <a name="btnEditarConfiguracion" data-id="@item.Config_id" style="color: #1A2DF3"><i class="fa fa-edit"></i></a>
+                                <a name="btnEliminarConfiguracion" data-id="@item.Config_id" style="color: #1A2DF3"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalAgregarConfiguracion" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Configuración</h4>
+                </div>
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <div>
+                        <label for="IDAgregarConfiguracionCodigo">ID Configuración:</label>
+                        <input class="form-control" id="IDAgregarConfiguracionCodigo" disabled placeholder="Sin asignar">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarConfiguracionClave">Clave:</label>
+                        <input class="form-control" id="IDAgregarConfiguracionClave">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarConfiguracionValor">Valor:</label>
+                        <input class="form-control" id="IDAgregarConfiguracionValor">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarConfiguracionDescripcion">Descripción:</label>
+                        <textarea class="form-control" id="IDAgregarConfiguracionDescripcion" rows="3"></textarea>
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarConfiguracionModificacion">Fecha de Modificación:</label>
+                        <input class="form-control" id="IDAgregarConfiguracionModificacion" type="datetime-local">
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnCancelarConfiguracion' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button id='btnAgregarConfiguracion' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaExitosa" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>Transacción realizada exitosamente</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnMensajeExitoso' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaEliminarConfiguracion" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>¿Está seguro que desea eliminar la Configuración?</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnAceptarEliminarConfiguracionConfirmacion' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                    <button id='btnCancelarEliminarConfiguracionConfirmacion' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @section scripts
+    {
+        <script src="~/js/Configuracion.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+    }
+</main>

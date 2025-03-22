@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+        }
+        .page {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .top-bar {
+            background: #1a73e8;
+            color: white;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .card:hover {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .button-primary {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .rating {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .star {
+            color: #ffd700;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .help-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .rating {
+            display: inline-block;
+            direction: rtl;
+        }
+        .star {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .star.active {
+            color: #ffcc00;
+        }
+        .star:hover, .star:hover ~ .star {
+            color: #ffcc00;
+        }
+        .rating-label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="top-bar">
+            <h2>Programar Recolección</h2>
+        </div>
+
+        <div class="form-group">
+            <label>Dirección de Recolección</label>
+            <select>
+                <option>Casa - Av. Principal 123</option>
+                <option>Oficina - Calle Comercial 456</option>
+                <option>+ Agregar nueva dirección</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha de Recolección</label>
+            <input type="date">
+        </div>
+
+        <div class="form-group">
+            <label>Horario Preferido</label>
+            <select>
+                <option>9:00 - 12:00</option>
+                <option>12:00 - 15:00</option>
+                <option>15:00 - 18:00</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Detalles del Paquete</label>
+            <select>
+                <option>Paquete Pequeño (hasta 5kg)</option>
+                <option>Paquete Mediano (5-15kg)</option>
+                <option>Paquete Grande (15-30kg)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Instrucciones Especiales</label>
+            <textarea rows="3" placeholder="Agregar instrucciones para el recolector..."></textarea>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 20px;">
+            <h3>Resumen de Costos</h3>
+            <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                <span>Servicio de recolección:</span>
+                <span>$10.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+                <span>Cargo por distancia:</span>
+                <span>$5.00</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px 0; font-weight: bold;">
+                <span>Total:</span>
+                <span>$15.00</span>
+            </div>
+        </div>
+
+        <button class="button-primary" style="width: 100%;">Confirmar Recolección</button>
+    </div>
+
+    <div class="page">
+        <div class="top-bar">
+            <h2>Métodos de Pago</h2>
+            <button class="button-primary">+ Agregar Método</button>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>•••• •••• •••• 1234</strong>
+                    <p style="margin: 5px 0;">Visa - Vence 12/25</p>
+                </div>
+                <div>
+                    <button style="margin-right: 10px;">Editar</button>
+                    <button>Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <strong>•••• •••• •••• 5678</strong>
+                    <p style="margin: 5px 0;">Mastercard - Vence 08/26</p>
+                </div>
+                <div>
+                    <button style="margin-right: 10px;">Editar</button>
+                    <button>Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <h3>Historial de Facturación</h3>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <strong>Entrega #DEL-001</strong>
+                    <p style="margin: 5px 0;">21 Feb, 2025</p>
+                </div>
+                <div>
+                    <strong>$16.80</strong>
+                    <button style="display: block; margin-top: 5px;">Ver Factura</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="top-bar">
+            <h2>Ayuda y Soporte</h2>
+        </div>
+
+        <div style="margin-bottom: 30px;">
+            <input type="text" placeholder="¿Cómo podemos ayudarte?" 
+                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+
+        <div class="help-categories">
+            <div class="card" style="text-align: center;">
+                <img src="/api/placeholder/40/40" alt="Track" style="margin-bottom: 10px;">
+                <h3>Seguimiento</h3>
+                <p>Estado de entregas</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <img src="/api/placeholder/40/40" alt="Returns" style="margin-bottom: 10px;">
+                <h3>Devoluciones</h3>
+                <p>Proceso de retorno</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <img src="/api/placeholder/40/40" alt="Payment" style="margin-bottom: 10px;">
+                <h3>Pagos</h3>
+                <p>Opciones de pago</p>
+            </div>
+        </div>
+
+        <h3>Preguntas Frecuentes</h3>
+        <div class="card">
+            <h4>¿Cómo rastreo mi paquete?</h4>
+            <p>Ingresa tu número de seguimiento en la sección de tracking...</p>
+        </div>
+        <div class="card">
+            <h4>¿Qué hago si no estoy para recibir?</h4>
+            <p>Puedes configurar instrucciones especiales de entrega...</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <h3>¿Necesitas más ayuda?</h3>
+            <button class="button-primary">Contactar Soporte</button>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="top-bar">
+            <h2>Calificar Entrega #DEL-001</h2>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="/api/placeholder/80/80" alt="Delivery Complete" style="margin-bottom: 15px;">
+            <h3>¿Cómo fue tu experiencia?</h3>
+        </div>
+
+        <div class="rating-container">
+            <div class="rating" id="ratingSelector">
+                <span class="star" data-value="5">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="1">★</span>
+            </div>
+            <input type="hidden" id="ratingInput" name="rating" value="0">
+        </div>
+
+        <div class="form-group">
+            <label>¿Qué te pareció el servicio?</label>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                <button style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 20px;">Excelente</button>
+                <button style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 20px;">A tiempo</button>
+                <button style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 20px;">Amable</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Comentarios Adicionales</label>
+            <textarea rows="4" placeholder="Comparte tu experiencia..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Agregar Fotos</label>
+            <div style="border: 2px dashed #ddd; padding: 20px; text-align: center; border-radius: 4px;">
+                <img src="/api/placeholder/40/40" alt="Upload" style="margin-bottom: 10px;">
+                <p>Arrastra fotos aquí o haz clic para seleccionar</p>
+            </div>
+        </div>
+
+        <button class="button-primary" style="width: 100%;">Enviar Reseña</button>
+    </div>
+</body>
+</html>

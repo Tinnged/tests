@@ -1,0 +1,153 @@
+﻿@model IEnumerable<API.Dto.Usuarios.Salida.DatosUsuarios>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
+    <br />
+    <h2>Gestión de Usuarios</h2>
+
+    <div class="container-fluid">
+        <br />
+        <div style="width:100%; margin:0 auto;">
+            <button id='btnAbrirDialogAgregarUsuario' class="btn btn-primary" style="background-color: #1A2DF3; width:10%">Agregar</button>
+            <br /><br />
+            <table class="display table table-bordered" id="UsuariosTabla" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th class="text-end">Telefono</th>
+                        <th class="text-center">Rol</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td id='NombreParam'>
+                                @Html.DisplayFor(modelItem => item.NombreCompleto)
+                            </td>
+                            <td id='DescripcionParam'>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td id='DescripcionParam'>
+                                @Html.DisplayFor(modelItem => item.Telefono)
+                            </td>
+                            <td id='DescripcionParam' class="text-center">
+                                @Html.DisplayFor(modelItem => item.Rol)
+                            </td>
+                            <td id='TipoParam' class="text-center">
+                                @(item.Activo ? "Activa" : "Inactiva")
+                            </td>
+                            <td class="text-center">
+                                <a name="btnEditarUsuario" data-id="@item.UsuarioID" style="color: #1A2DF3"><i class="fa fa-edit"></i></a>
+                                <a name="btnEliminarUsuario" data-id="@item.UsuarioID" style="color: #1A2DF3"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalAgregarUsuario" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Usuario</h4>
+                </div>
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <div>
+                        <label for="IDAgregarUsuarioCodigo">Código de Usuario:</label>
+                        <input class="form-control" id="IDAgregarUsuarioCodigo" disabled placeholder="Sin asignar">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarUsuarioNombre">Digite el Nombre:</label>
+                        <input class="form-control" id="IDAgregarUsuarioNombre">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarUsuarioApellido">Digite los Apellidos:</label>
+                        <input class="form-control" id="IDAgregarUsuarioApellido" >
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarUsuarioEmail">Digite el Email:</label>
+                        <input class="form-control" id="IDAgregarUsuarioEmail" type="email">
+                    </div>
+                    <div style="margin-top: 3%" id="CampoAgregarUsuario">
+                        <label for="IDAgregarUsuarioContrasena">Digite el Contraseña:</label>
+                        <input class="form-control" id="IDAgregarUsuarioContrasena" type="password">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarUsuarioTelefono">Digite el Telefono:</label>
+                        <input class="form-control" id="IDAgregarUsuarioTelefono" type="tel">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarUsuarioRol">Digite el Rol:</label>
+                        <input class="form-control" id="IDAgregarUsuarioRol" >
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarUsuarioEstado">Digite el Estado:</label>
+                        <select id="IDAgregarUsuarioEstado" class="select form-control">
+                            <option value="true" selected>Activo</option>
+                            <option value="false">Inactivo</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnCancelarUsuario' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button id='btnAgregarUsuario' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaExitosa" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>Transacción realizada exitosamente</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnMensajeExitoso' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaEliminarUsuario" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>¿Está seguro que desea eliminar el Usuario?</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnAceptarEliminarUsuarioConfirmacion' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                    <button id='btnCancelarEliminarUsuarioConfirmacion' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @section scripts
+    {
+        <script src="~/js/Usuario.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+    }
+</main>

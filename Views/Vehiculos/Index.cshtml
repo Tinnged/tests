@@ -1,0 +1,162 @@
+@model IEnumerable<API.Dto.Vehiculos.Salida.DatosVehiculos>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
+    <br />
+    <h2>Gestión de Vehículos</h2>
+
+    <div class="container-fluid">
+        <br />
+        <div style="width:100%; margin:0 auto;">
+            <button id='btnAbrirDialogAgregarVehiculo' class="btn btn-primary" style="background-color: #1A2DF3; width:10%">Agregar</button>
+            <br /><br />
+            <table class="display table table-bordered" id="VehiculosTabla" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Placa</th>
+                        <th>Modelo</th>
+                        <th>Tipo</th>
+                        <th class="text-end">Capacidad (kg)</th>
+                        <th class="text-center">Estado</th>
+                        <th>Kilometraje</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td id='PlacaParam'>
+                                @Html.DisplayFor(modelItem => item.Placa)
+                            </td>
+                            <td id='ModeloParam'>
+                                @Html.DisplayFor(modelItem => item.Modelo)
+                            </td>
+                            <td id='TipoParam'>
+                                @Html.DisplayFor(modelItem => item.Tipo)
+                            </td>
+                            <td id='CapacidadParam' class="text-end">
+                                @item.CapacidadKg.ToString("N2")
+                            </td>
+                            <td id='EstadoParam' class="text-center">
+                                @Html.DisplayFor(modelItem => item.Estado)
+                            </td>
+                            <td id='KilometrajeParam'>
+                                @Html.DisplayFor(modelItem => item.Kilometraje)
+                            </td>
+                            <td class="text-center">
+                                <a name="btnEditarVehiculo" data-id="@item.VehiculoID" style="color: #1A2DF3"><i class="fa fa-edit"></i></a>
+                                <a name="btnEliminarVehiculo" data-id="@item.VehiculoID" style="color: #1A2DF3"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalAgregarVehiculo" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Vehículo</h4>
+                </div>
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <div>
+                        <label for="IDAgregarVehiculoCodigo">ID Vehículo:</label>
+                        <input class="form-control" id="IDAgregarVehiculoCodigo" disabled placeholder="Sin asignar">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoPlaca">Placa:</label>
+                        <input class="form-control" id="IDAgregarVehiculoPlaca">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoModelo">Modelo:</label>
+                        <input class="form-control" id="IDAgregarVehiculoModelo">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoTipo">Tipo:</label>
+                        <input class="form-control" id="IDAgregarVehiculoTipo">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoCapacidad">Capacidad (kg):</label>
+                        <input class="form-control" id="IDAgregarVehiculoCapacidad" type="number" step="0.01">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoEstado">Estado:</label>
+                        <select id="IDAgregarVehiculoEstado" class="select form-control">
+                            <option value="Activo" selected>Activo</option>
+                            <option value="En mantenimiento">En mantenimiento</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoMantenimiento">Último Mantenimiento:</label>
+                        <input class="form-control" id="IDAgregarVehiculoMantenimiento" type="date">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoAdquisicion">Fecha de Adquisición:</label>
+                        <input class="form-control" id="IDAgregarVehiculoAdquisicion" type="date">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarVehiculoKilometraje">Kilometraje:</label>
+                        <input class="form-control" id="IDAgregarVehiculoKilometraje" type="number">
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnCancelarVehiculo' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button id='btnAgregarVehiculo' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaExitosa" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>Transacción realizada exitosamente</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnMensajeExitoso' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaEliminarVehiculo" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>¿Está seguro que desea eliminar el Vehículo?</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnAceptarEliminarVehiculoConfirmacion' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                    <button id='btnCancelarEliminarVehiculoConfirmacion' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @section scripts
+    {
+        <script src="~/js/Vehiculo.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+    }
+</main>

@@ -1,0 +1,168 @@
+﻿@model IEnumerable<API.Dto.Direcciones.Salida.DatosDirecciones>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main class="col-md-9 ms-sm-auto col-lg-12 px-md-4">
+    <br />
+    <h2>Gestión de Direcciones</h2>
+
+    <div class="container-fluid">
+        <br />
+        <div style="width:100%; margin:0 auto;">
+            <button id='btnAbrirDialogAgregarDireccion' class="btn btn-primary" style="background-color: #1A2DF3; width:10%">Agregar</button>
+            <br /><br />
+            <table class="display table table-bordered" id="DireccionesTabla" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Zona</th>
+                        <th>Calle</th>
+                        <th>Ciudad</th>
+                        <th class="text-center">¿Principal?</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td id='NombreParam'>
+                                @Html.DisplayFor(modelItem => item.NombreCompletoUsuario)
+                            </td>
+                            <td id='DescripcionParam'>
+                                @Html.DisplayFor(modelItem => item.NombreZona)
+                            </td>
+                            <td id='DescripcionParam'>
+                                @Html.DisplayFor(modelItem => item.Calle)
+                            </td>
+                            <td id='DescripcionParam'>
+                                @Html.DisplayFor(modelItem => item.Ciudad)
+                            </td>
+                            <td id='TipoParam' class="text-center">
+                                @(item.DireccionPrincipal ? "SÍ" : "NO")
+                            </td>
+                            <td class="text-center">
+                                <a name="btnEditarDireccion" data-id="@item.DireccionID" style="color: #1A2DF3"><i class="fa fa-edit"></i></a>
+                                <a name="btnEliminarDireccion" data-id="@item.DireccionID" style="color: #1A2DF3"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalAgregarDireccion" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Direccion</h4>
+                </div>
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <div>
+                        <label for="IDAgregarDireccionCodigo">Código de Direccion:</label>
+                        <input class="form-control" id="IDAgregarDireccionCodigo" disabled placeholder="Sin asignar">
+                    </div>
+
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionUsuario">Usuario:</label>
+                        <select id="IDAgregarDireccionUsuario" class="select form-control">
+                        </select>
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionZona">Zona:</label>
+                        <select id="IDAgregarDireccionZona" class="select form-control">
+                        </select>
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionCalle">Digite la Calle:</label>
+                        <input class="form-control" id="IDAgregarDireccionCalle">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionNumero">Digite la Numero:</label>
+                        <input class="form-control" id="IDAgregarDireccionNumero" type="number">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionCiudad">Digite la Ciudad:</label>
+                        <input class="form-control" id="IDAgregarDireccionCiudad">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionCodigoPostal">Digite la CodigoPostal:</label>
+                        <input class="form-control" id="IDAgregarDireccionCodigoPostal" type="number">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionReferencias">Digite la Referencias:</label>
+                        <input class="form-control" id="IDAgregarDireccionReferencias">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionDireccionPrincipal">Digite la Direccion Principal:</label>
+                        <select id="IDAgregarDireccionDireccionPrincipal" class="select form-control">
+                            <option value="true" selected>SÍ</option>
+                            <option value="false">NO</option>
+                        </select>
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionLatitud">Digite la Latitud:</label>
+                        <input class="form-control" id="IDAgregarDireccionLatitud" type="number">
+                    </div>
+                    <div style="margin-top: 3%">
+                        <label for="IDAgregarDireccionLongitud">Digite la Longitud:</label>
+                        <input class="form-control" id="IDAgregarDireccionLongitud" type="number">
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnCancelarDireccion' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    <button id='btnAgregarDireccion' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaExitosa" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>Transacción realizada exitosamente</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnMensajeExitoso' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVentanaEliminarDireccion" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <br />
+                <div style="width: 80%; margin-left: 10%" class="modal-body">
+                    <p>¿Está seguro que desea eliminar el Direccion?</p>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button id='btnAceptarEliminarDireccionConfirmacion' type="button" class="btn btn-primary" style="background-color: #1A2DF3">Aceptar</button>
+                    <button id='btnCancelarEliminarDireccionConfirmacion' type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    @section scripts
+    {
+        <script src="~/js/Direccion.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+    }
+</main>
